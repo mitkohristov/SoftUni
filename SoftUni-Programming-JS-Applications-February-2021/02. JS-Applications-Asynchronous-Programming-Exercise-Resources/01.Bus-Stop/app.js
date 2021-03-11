@@ -3,7 +3,7 @@ async function getInfo() {
     buses.innerHTML = ''
     
     try {
-        document.getElementById('stopId').value = ''
+        
         const url = 'http://localhost:3030/jsonstore/bus/businfo/' + id
         const response = await fetch(url)
         if (!response.ok) {
@@ -23,7 +23,7 @@ async function getInfo() {
 
 
         })
-
+        document.getElementById('stopId').value = ''
 
     } catch (err) {
         stopName.textContent = "Error"
