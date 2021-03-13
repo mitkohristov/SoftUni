@@ -4,11 +4,9 @@ function attachEvents() {
 
 
     document.getElementById('submit').addEventListener('click', async (ev) => {
-       // ev.preventDefault()
+        // ev.preventDefault()
         try {
             const urlWeather = 'http://localhost:3030/jsonstore/forecaster/locations'
-            const urlUpcoming = 'http://localhost:3030/jsonstore/forecaster/upcoming/'
-
             const response = await fetch(urlWeather)
             const data = await response.json()
             if (!response.ok || input.value === '' || data.forEach(o => o.name.toLowerCase() === input.value.toLowerCase() ? getAll(o.code) : false)) {
@@ -25,7 +23,11 @@ function attachEvents() {
     })
 
     async function showData(code) {
-
+        const current = document.getElementById('current')
+        let rem = current.parentNode.childNodes[1].children
+          let arr = [...rem]
+          arr.filter((e,i) => i !== 0 ?e.remove(e) : '')
+        
         document.getElementById('forecast').style.display = 'block'
 
         const urlConditions = 'http://localhost:3030/jsonstore/forecaster/today/' + code
@@ -35,36 +37,42 @@ function attachEvents() {
 
         const res1 = e('div', { className: 'forecasts' },
             e('span', { className: 'condition symbol' }, returnSymbol(data.forecast.condition)),
-            e('span', { className: 'condition' },e('span', { className: 'forecast-data' }, returnName(data)),
-            e('span', { className: 'forecast-data' }, returnDegrees(data)),e('span', { className: 'forecast-data' }, returnWeather(data))))
+            e('span', { className: 'condition' }, e('span', { className: 'forecast-data' }, returnName(data)),
+                e('span', { className: 'forecast-data' }, returnDegrees(data)), e('span', { className: 'forecast-data' }, returnWeather(data))))
 
-        const current = document.getElementById('current')
+
         current.appendChild(res1)
         // New York
     }
 
     async function upcoming(code) {
-
+        const upcoming = document.getElementById('upcoming')
+        let rem = upcoming.parentNode.childNodes[3].children
+          let arr = [...rem]
+          arr.filter((e,i) => i !== 0 ?e.remove(e) :'')
+        
         const urlConditions = 'http://localhost:3030/jsonstore/forecaster/upcoming/' + code
         const response = await fetch(urlConditions)
         const data = await response.json()
-        const forecastInfo =  e('div', { className: 'forecast-info'})
-        const upcoming = document.getElementById('upcoming')
+        
+        const forecastInfo = e('div', { className: 'forecast-info' })
         upcoming.appendChild(forecastInfo)
-       data.forecast.forEach(o => {
-            const result = e('span',{ className: 'upcoming'},e('span',{className: 'symbol'},returnSymbol(o.condition)))
+
+        data.forecast.forEach(o => {
+            const result = e('span', { className: 'upcoming' },
+                e('span', { className: 'symbol' }, returnSymbol(o.condition)),
+                e('span', { className: 'forecast-data' }, `${o.low}/${o.high}`), e('span', { className: 'forecast-data' }, `${o.condition}`))
 
 
             forecastInfo.appendChild(result)
-       })
-
-
+        })
+ 
 
     }
-  function getAll(code){
-    showData(code)
-    upcoming(code)
-  }
+    function getAll(code) {
+        showData(code)
+        upcoming(code)
+    }
     function returnSymbol(day) {
 
         weather = {
