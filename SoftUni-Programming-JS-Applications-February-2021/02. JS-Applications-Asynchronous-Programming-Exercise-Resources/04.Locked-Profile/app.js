@@ -14,7 +14,7 @@ async function getAccount() {
       let profile = e('div',{ className : 'profile'},
                    e('img', { src: './iconProfile2.png', className : 'userIcon'}), 
                     e('label',{},'Lock'),
-                    e('input',{type: 'radio',name :`user${userCount}Locked`,value: lock,onclick:lockProfile}), 
+                    e('input',{type: 'radio',name :`user${userCount}Locked`,value: 'lock',onclick:lockProfile}), 
                     e('label',{},'Unlock'),
                     e('input',{type: 'radio',name:`user${userCount}Unlocked`,value: 'unlock',onclick:unlockProfile}),
                     e('br',{}), 
