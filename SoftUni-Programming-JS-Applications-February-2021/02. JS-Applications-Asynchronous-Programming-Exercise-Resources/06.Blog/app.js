@@ -4,47 +4,45 @@ function attachEvents() {
     const posts = document.getElementsById('posts')
 
 
-     
+
 
 
 }
- function getAll(){
+function getAll() {
     const postid = posts.value
     loadComments(postid)
     loadPostDetails(postid)
 }
 async function loadComments(postid) {
-    const  commentArea = document.getElementById('post-comments')
+    const commentArea = document.getElementById('post-comments')
     commentArea.innerHTML = ''
     const postComments = 'http://localhost:3030/jsonstore/blog/comments/'
-    // const postDetails = 'http://localhost:3030/jsonstore/blog/posts'
     const response = await fetch(postComments)
     const data = await response.json()
-     const result = Object.values(data).filter(c =>c.postId == postid)
-     result.forEach(c =>{
+    const result = Object.values(data).filter(c => c.postId == postid)
+    result.forEach(c => {
         const liElement = document.createElement('li')
         liElement.textContent = c.text
         commentArea.appendChild(liElement)
-     })
-     
-    
-    
+    })
+
+
+
 }
 async function loadPostDetails(postid) {
     const postTitle = document.getElementById('post-title')
     const postBody = document.getElementById('post-body')
     postBody.innerHTML = ''
     postTitle.innerHTML = ''
-    const url = 'http://localhost:3030/jsonstore/blog/posts/' +postid
+    const url = 'http://localhost:3030/jsonstore/blog/posts/' + postid
     const response = await fetch(url)
     const data = await response.json()
-    console.log(data)
-     postTitle.textContent = data.title
-     const liElement = document.createElement('li')
-     liElement.textContent =data.body
-     postBody.appendChild(liElement)
-     
-  
+    postTitle.textContent = data.title
+    const liElement = document.createElement('li')
+    liElement.textContent = data.body
+    postBody.appendChild(liElement)
+
+
 }
 
 
