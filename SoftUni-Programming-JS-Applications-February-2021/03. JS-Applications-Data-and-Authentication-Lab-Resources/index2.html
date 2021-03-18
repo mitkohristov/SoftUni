@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      #register label {
+        display: block;
+      }
+      #login label {
+        display: block;
+      }
+
+      #submitData label {
+        display: block;
+      }
+    </style>
+
+    <form id="register" action="">
+      <h2>Register Form</h2>
+      <label>Email: <input type="text" name="email" /></label>
+      <label>Password: <input type="password" name="password" /></label>
+      <label>Repass: <input type="password" name="repass" /></label>
+      <input type="submit" value="Register" name="register" />
+    </form>
+
+    <form id="login" action="">
+      <h2>Login Form</h2>
+      <label>Username: <input type="text" name="email" /></label>
+      <label>Password: <input type="text" name="password" /></label>
+      <input type="submit" value="login" name="Login" />
+    </form>
+
+    <form id="submitData" action="">
+      <h2>Submit Data Form</h2>
+      <label>Email: <input type="text" name="email" /></label>
+      <label>Password: <input type="text" name="password" /></label>
+      <input type="submit" value="login" name="Login" />
+    </form>
+
+    <!-- <form id="login"action="">
+    <h2>Login Form</h2>
+    <label>Username: <input type="text" name="username"></label>
+    <label>Password: <input type="text" name="password"></label>
+    <label>Repass: <input type="text" name="repass"></label>
+    <input type="submit" value="Register" name="register">
+  </form> -->
+    <script>
+      const registerForm = document.getElementById("register");
+      registerForm.addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        const regForm = new FormData(registerForm);
+        const email = regForm.get("email");
+        const password = regForm.get("password");
+        const repass = regForm.get("repass");
+
+        if (email == "" || password == "") {
+          alert("All fields required");
+        } else if (password !== repass) {
+          alert("Passwords don't match");
+        }
+
+        register(email, password);
+      });
+
+      const loginForm = document.getElementById("login");
+      loginForm.addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        const formData = new FormData(loginForm);
+        const email = formData.get("email");
+        const password = formData.get("password");
+
+        console.log(email, password);
+      });
+
+      async function register(email, password) {
+        const response = await fetch("http://localhost:3030/users/register", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert("Succcess");
+        } else if (!response.ok) {
+          alert(response.statusText);
+        }
+
+        if (sessionStorage.accessToken == null) {
+          sessionStorage.setItem("authToken", data.accessToken);
+        }
+      }
+
+      async function login(email, password) {
+        const response = await fetch("http://localhost:3030/users/login", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(response.statusText);
+        }
+        if (sessionStorage.accessToken == null) {
+          sessionStorage.setItem("authToken", data.accessToken);
+        }
+      }
+
+      async function submit(d) {
+        const options = {
+          method: "POST",
+          headers: {},
+          body: JSON.stringify(d),
+        };
+       
+      
+        const token = sessionStorage.getItem("authToken");
+        
+        if (token == null) {
+            alert("Login First");
+        } else {
+            options.headers["X-Authorization"] = token;
+        }
+        const response = await fetch("http://localhost:3030/data/records",options)
+        const data = await response.json();
+        
+      }
+
+    </script>
+  </body>
+</html>
