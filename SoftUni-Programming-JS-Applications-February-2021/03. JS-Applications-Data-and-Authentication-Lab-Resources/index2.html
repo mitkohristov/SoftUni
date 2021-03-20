@@ -15,8 +15,11 @@
         display: block;
       }
 
-      #submitData label {
+      #submit-data label {
         display: block;
+      }
+      input #get-data {
+        padding-top: 30px;
       }
     </style>
 
@@ -35,20 +38,15 @@
       <input type="submit" value="login" name="Login" />
     </form>
 
-    <form id="submitData" action="">
+    <form id="submit-data" action="">
       <h2>Submit Data Form</h2>
-      <label>Email: <input type="text" name="email" /></label>
-      <label>Password: <input type="text" name="password" /></label>
-      <input type="submit" value="login" name="Login" />
+      <label>Name: <input type="text" name="name" /></label>
+      <label>Value: <input type="text" name="value" /></label>
+      <input type="submit" value="Submit" name="Submit" />
     </form>
 
-    <!-- <form id="login"action="">
-    <h2>Login Form</h2>
-    <label>Username: <input type="text" name="username"></label>
-    <label>Password: <input type="text" name="password"></label>
-    <label>Repass: <input type="text" name="repass"></label>
-    <input type="submit" value="Register" name="register">
-  </form> -->
+    <label>Get Data from Server: <input type="submit" id="get-data" name="getData" value="getData"></input></label>
+
     <script>
       const registerForm = document.getElementById("register");
       registerForm.addEventListener("submit", (ev) => {
@@ -74,7 +72,26 @@
         const email = formData.get("email");
         const password = formData.get("password");
 
-        console.log(email, password);
+        login(email, password);
+
+       
+      });
+
+
+      const submitForm = document.getElementById("submit-data");
+        submitForm.addEventListener("submit", ev => {
+          ev.preventDefault();
+          const formData = new FormData(submitForm);
+          const name = formData.get("name");
+          const val = formData.get("value");
+
+          submit({name, val});
+        });
+
+      document.getElementById("get-data").addEventListener("click", (e) => {
+        e.preventDefault();
+        getData()
+        
       });
 
       async function register(email, password) {
@@ -117,20 +134,43 @@
           headers: {},
           body: JSON.stringify(d),
         };
-       
-      
+
         const token = sessionStorage.getItem("authToken");
-        
+
         if (token == null) {
-            alert("Login First");
+          alert("Login First");
         } else {
-            options.headers["X-Authorization"] = token;
+          options.headers["X-Authorization"] = token;
         }
-        const response = await fetch("http://localhost:3030/data/records",options)
+        const response = await fetch(
+          "http://localhost:3030/data/records",
+          options
+        );
         const data = await response.json();
-        
       }
 
+
+      async function getData(){
+      const options = {
+          method: "GET",
+          headers: {},
+          
+      }
+        const authToken = sessionStorage.getItem('authToken')
+      if(sessionStorage.getItem('authToken') !== null){
+
+        options.headers["X-Authorization"] = authToken;
+      }
+      const response = await fetch("http://localhost:3030/data/records",options)
+
+      const data = await response.json();
+      let res = ''
+              data.forEach(o => {
+                  res += `${o.name}-${o.val}\n`
+              });
+
+   alert(res)
+      }
     </script>
   </body>
 </html>
