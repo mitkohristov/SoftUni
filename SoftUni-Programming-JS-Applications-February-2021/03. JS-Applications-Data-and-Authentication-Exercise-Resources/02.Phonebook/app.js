@@ -8,6 +8,10 @@ function attachEvents() {
      e.preventDefault()
      const person = document.getElementById('person').value
      const phone = document.getElementById('phone').value
+     if(person == '' || phone == ''){
+        return  alert('All fields required')
+     }
+     
      addRecord({person,phone})
      getData()
  })
@@ -24,7 +28,7 @@ async function getData(){
         headers: { 'Content-Type': 'application/json' }
     }
 
-    const response = await fetch('http://localhost:3030/jsonstore/phonebook',options)
+    const response = await fetch('http://192.168.88.10:3030/jsonstore/phonebook',options)
     const data = await response.json()
    Object.values(data).forEach(o =>{
     const li = document.createElement('li')
@@ -54,8 +58,10 @@ async function addRecord(record){
        body: JSON.stringify(record)
    }
 
-   const response = await fetch('http://localhost:3030/jsonstore/phonebook',options)
+   const response = await fetch('http://192.168.88.10:3030/jsonstore/phonebook',options)
    const data = await response.json()
+   person.value = ''
+   phone.value =''
 
 }
 
@@ -66,7 +72,7 @@ async function deleteRecord(recordId){
 
     }
 
-    const response = await fetch('http://localhost:3030/jsonstore/phonebook/' + recordId,options)
+    const response = await fetch('http://192.168.88.10:3030/jsonstore/phonebook/' + recordId,options)
     const data = await response.json()
 
 
