@@ -55,11 +55,11 @@ function attachEvents() {
            nodeList1.forEach(n =>{
               if(ev.target.id === n.id){
                   
-                const angler= n.childNodes[1].value
-                const weight= n.childNodes[4].value
-                const species=  n.childNodes[7].value
-                const location = n.childNodes[10].value
-                const bait =n.childNodes[13].value
+                const angler      = n.childNodes[1].value
+                const weight      = n.childNodes[4].value
+                const species     = n.childNodes[7].value
+                const location    = n.childNodes[10].value
+                const bait        = n.childNodes[13].value
                 const captureTime = n.childNodes[16].value
                   editCatch(ev.target.id,{angler,weight,species,location,bait,captureTime})
                  
