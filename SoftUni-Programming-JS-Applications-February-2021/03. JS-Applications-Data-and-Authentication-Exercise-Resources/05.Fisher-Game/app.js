@@ -1,5 +1,9 @@
 function attachEvents() {
-
+    const divCatches = document.getElementById('catches')
+    divCatches.innerHTML = ''
+    document.querySelector('.load').addEventListener('click', () =>{
+ getAllCatches()
+    })
 
     window.addEventListener('load',() =>{
         if(sessionStorage.getItem('authToken') !== null){
@@ -26,21 +30,54 @@ function attachEvents() {
 
 
 
-    getAllCatches()
+    
 }
 
 attachEvents();
 
 
 async function getAllCatches(){
-    const divCatches = document.getElementById('catches').innerHTML = ''
+   const divCatches = document.getElementById('catches')
+   divCatches.innerHTML = ''
   const options = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
   }
 const response = await fetch('http://localhost:3030/data/catches',options)
 const data = await response.json()
-  
+
+Object.values(data).forEach(o => {
+ 
+    const result =  e('div',{className : 'catch',id : o._id,value : o._id},
+    e('label',{},'Angler'),
+    e('input',{type: 'text',className: 'angler',value:o.angler}),
+    e('hr',{}),
+    e('label',{},'Weight'),
+    e('input',{type: 'number',className: 'weight',value :o.weight}),
+    ('hr'),
+    e('label',{},'Species'),
+    e('input',{type: 'text',className: 'species',value:o.species}),
+    e('hr',{}),
+    e('label',{},'Location'),
+    e('input',{type: 'text',className: 'location',value:o.location}),
+    e('hr'),
+    e('label',{},'Bait'),
+    e('input',{type: 'text',className: 'bait',value:o.bait}),
+    e('hr'),
+    e('label',{},'Capture Time'),
+    e('input',{type: 'number',className: 'captureTime',value :o.captureTime}),
+    e('hr'),
+    e('button',{className:'update',id:o._id},'Update'),
+    e('button',{className:'delete',id:o._id},'Delete')
+
+)
+
+divCatches.appendChild(result)
+})
+
+
+
+
 }
 
 

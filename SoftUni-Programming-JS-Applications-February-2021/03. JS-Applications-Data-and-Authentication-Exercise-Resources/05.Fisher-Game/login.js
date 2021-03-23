@@ -11,6 +11,22 @@ loginForm.addEventListener('submit', ev=>{
    login(email, password)
 })
 
+const signUpForm = document.getElementById('register')
+signUpForm.addEventListener('submit', ev=>{
+    ev.preventDefault()
+    const formData = new FormData(signUpForm)
+    const email = formData.get('email')
+    const password = formData.get('password')
+    const repass = formData.get('rePass')
+
+    if(email == '' || password == '' || repass == ''){
+        return alert('All fields are required')
+    }
+   signUp(email,password)
+})
+
+
+
 async function login(email,password){
 
     const options ={
@@ -31,12 +47,28 @@ if(response.ok){
 }else if(!response.ok) {
      alert(data.message)
 }
-      
-console.log(data)
-
-
 }
 
+
+async function signUp(email, password){
+  const options = { 
+      method:'post',
+      headers:{ 'Content-Type': 'application/json'},
+      body: JSON.stringify({email,password})
+  }
+
+  const response = await fetch('http://localhost:3030/users/register',options)
+  const data = await response.json()
+  const token = data.accessToken
+  console.log(data)
+  if(response.ok){
+   sessionStorage.setItem('authToken',token)
+   window.location.pathname = 'index.html'
+  }else if(!response.ok) {
+      return alert(data.message)
+  }
+
+}
 
 
 window.addEventListener('load',() =>{
