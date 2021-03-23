@@ -51,8 +51,8 @@ function attachEvents() {
         if (ev.target.className == 'delete') {
             deleteCatch(ev.target.id)
         } else if (ev.target.className == 'update') {
-            const [...nodeList1] = ev.target.parentNode.parentNode.childNodes
-           nodeList1.forEach(n =>{
+            const [...userData] = ev.target.parentNode.parentNode.childNodes
+           userData.forEach(n =>{
               if(ev.target.id === n.id){
                   
                 const angler      = n.childNodes[1].value
