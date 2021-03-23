@@ -51,7 +51,6 @@ function attachEvents() {
         if (ev.target.className == 'delete') {
             deleteCatch(ev.target.id)
         } else if (ev.target.className == 'update') {
-            console.log(ev.target.id)
             const [...nodeList1] = ev.target.parentNode.parentNode.childNodes
            nodeList1.forEach(n =>{
               if(ev.target.id === n.id){
@@ -164,7 +163,7 @@ async function deleteCatch(id) {
     if (response.ok) {
         alert('Deleted')
         getAllCatches()
-    } else if (!response.ok && response.statusText == 'Forbidden') {
+    } else if (!response.ok || response.statusText == 'Forbidden') {
 
         alert(`${data.message} You dont have permissions`)
     }
@@ -172,7 +171,7 @@ async function deleteCatch(id) {
 }
 
 async function editCatch(id, d) {
-console.log(id, d)
+
     const options = {
         method: 'PUT',
         headers: {},
