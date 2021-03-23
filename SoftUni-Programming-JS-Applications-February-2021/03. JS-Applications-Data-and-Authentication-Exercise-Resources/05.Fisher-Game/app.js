@@ -93,7 +93,7 @@ divCatches.appendChild(result)
 
 
 
- //tova e test
+
 async function submitData(d){
     const options = {
         method: 'post',
