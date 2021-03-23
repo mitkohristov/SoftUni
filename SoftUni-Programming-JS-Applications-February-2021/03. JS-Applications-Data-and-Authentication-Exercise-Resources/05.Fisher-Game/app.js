@@ -191,10 +191,10 @@ console.log(id, d)
     const response = await fetch('http://localhost:3030/data/catches/' + id, options)
     const data = await response.json()
 
-    if(response.ok) {
-        return alert(data.message)
-    }else if(!response){
-        return alert(data.message)
+    if(response.status == 200) {
+       alert("Updated")
+    }else if(!response.ok){
+        alert(response.statusText)
     }
 
 
