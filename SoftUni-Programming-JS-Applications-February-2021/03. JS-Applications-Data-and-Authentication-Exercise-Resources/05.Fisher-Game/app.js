@@ -69,12 +69,6 @@ function attachEvents() {
         }
     })
 
-//    const test = document.getElementById('35c62d76-8152-4626-8712-eeb96381bea8')
-//    test.addEventListener('submit', (ev) => {
-//        const formData = new FormData(test)
-//        const angler = formData.get('angler')
-//    })
-
 
 }
 
