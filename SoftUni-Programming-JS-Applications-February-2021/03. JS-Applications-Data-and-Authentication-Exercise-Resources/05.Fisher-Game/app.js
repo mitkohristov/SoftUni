@@ -4,7 +4,7 @@ function attachEvents() {
     document.querySelector('.load').addEventListener('click', () =>{
  getAllCatches()
     })
-
+  
     window.addEventListener('load',() =>{
         if(sessionStorage.getItem('authToken') !== null){
             document.getElementById('guest').style.display ='none'
@@ -38,9 +38,22 @@ ev.preventDefault()
     const location = formData.get('location')
     const bait = formData.get('bait')
     const captureTime = formData.get('captureTime')
-
+    if(angler == '' || weight == '' ||species == '' || location == '' || bait == '' || captureTime == ''){
+        return alert('All fields are required')
+    }
     submitData({angler, weight, species, location, bait,captureTime})
+    getAllCatches()
 })
+
+window.addEventListener('click', (ev) =>{
+
+    if(ev.target.className == 'delete'){
+        deleteCatch(ev.target.id)
+    }else if(ev.target.className == 'update'){
+
+    }
+})
+
 
 
     
@@ -61,7 +74,7 @@ const data = await response.json()
 
 Object.values(data).forEach(o => {
  
-    const result =  e('div',{className : 'catch',id : o._id,value : o._id},
+    const result =  e('div',{className : 'catch',id : o._ownerId},
     e('label',{},'Angler'),
     e('input',{type: 'text',className: 'angler',value:o.angler}),
     e('hr',{}),
@@ -111,11 +124,38 @@ async function submitData(d){
     const data =await response.json()
     if(response.ok){
         alert('Success')
-    }else{
+    }else if(data.message == "Invalid access token"){
+        sessionStorage.removeItem('authToken')
+        window.location.pathname  = '/login.html'
+        location.reload()
+    }else {
+        
         return alert(data.message)
     }
   
   
+  }
+
+
+  async function deleteCatch(id){
+      const options = {
+          method: 'delete',
+          headers: {},
+      }
+
+      if(sessionStorage.getItem('authToken')!== null){
+          options.headers['X-Authorization'] = sessionStorage.getItem('authToken')
+      }
+      const response = await fetch('http://localhost:3030/data/catches/' + id,options)
+      const data =await response.json()
+      if(response.ok){
+          alert('Deleted')
+          getAllCatches()
+      }else if (!response.ok && response.statusText == 'Forbidden'){
+        
+          alert(`${data.message} You dont have permissions`)
+      }
+
   }
 
 function e(type, attributes, ...content) {
