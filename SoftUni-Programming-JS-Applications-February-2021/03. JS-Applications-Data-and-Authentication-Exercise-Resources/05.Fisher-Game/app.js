@@ -61,7 +61,8 @@ function attachEvents() {
                 const location    = n.childNodes[10].value
                 const bait        = n.childNodes[13].value
                 const captureTime = n.childNodes[16].value
-                  editCatch(ev.target.id,{angler,weight,species,location,bait,captureTime})
+            
+            editCatch(ev.target.id,{angler,weight,species,location,bait,captureTime})
                  
               }
            })
