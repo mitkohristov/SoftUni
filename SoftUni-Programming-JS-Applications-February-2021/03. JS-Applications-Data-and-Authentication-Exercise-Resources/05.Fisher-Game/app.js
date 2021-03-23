@@ -8,6 +8,7 @@ function attachEvents() {
     window.addEventListener('load',() =>{
         if(sessionStorage.getItem('authToken') !== null){
             document.getElementById('guest').style.display ='none'
+            document.querySelector('.add').disabled = false
     
         }
     })
@@ -27,7 +28,19 @@ function attachEvents() {
     }
   
 
+const addCatches = document.getElementById('addForm')
+addCatches.addEventListener('submit', (ev) =>{
+ev.preventDefault()
+    const formData = new FormData(addCatches)
+    const angler = formData.get('angler')
+    const weight = formData.get('weight')
+    const species = formData.get('species')
+    const location = formData.get('location')
+    const bait = formData.get('bait')
+    const captureTime = formData.get('captureTime')
 
+    submitData({angler, weight, species, location, bait,captureTime})
+})
 
 
     
@@ -75,12 +88,35 @@ Object.values(data).forEach(o => {
 divCatches.appendChild(result)
 })
 
-
-
-
 }
 
 
+
+
+ //tova e test
+async function submitData(d){
+    const options = {
+        method: 'post',
+        headers: {},
+        body: JSON.stringify(d)
+    }
+  const token = sessionStorage.getItem('authToken')
+    if(token == null){
+        return alert('You need to register/login')
+    }else if(token !== null){
+        options.headers['X-Authorization'] = token
+    }
+  
+    const response = await fetch('http://localhost:3030/data/catches',options)
+    const data =await response.json()
+    if(response.ok){
+        alert('Success')
+    }else{
+        return alert(data.message)
+    }
+  
+  
+  }
 
 function e(type, attributes, ...content) {
     const result = document.createElement(type);
