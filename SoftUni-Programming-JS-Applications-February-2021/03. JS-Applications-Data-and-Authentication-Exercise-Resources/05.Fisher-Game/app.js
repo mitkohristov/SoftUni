@@ -116,9 +116,6 @@ async function getAllCatches() {
 }
 
 
-
-
-
 async function submitData(d) {
     const options = {
         method: 'post',
