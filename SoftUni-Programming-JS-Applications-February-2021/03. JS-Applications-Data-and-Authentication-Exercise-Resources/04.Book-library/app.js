@@ -108,11 +108,11 @@ async function getData() {
 
     Object.entries(data).forEach(o => {
         const result = e('tr', {},
-            e('td', {}, o[1].author),
             e('td', {}, o[1].title),
+            e('td', {}, o[1].author),
             e('td', {},
-                e('button', { id: `${o[0]}`, }, 'Edit'),
-                e('button', { id: `${o[0]}` }, 'Delete')
+                e('button', { id: `${o[0]}`}, 'Edit'),
+                e('button', { id: `${o[0]}`}, 'Delete')
             )
         )
 
