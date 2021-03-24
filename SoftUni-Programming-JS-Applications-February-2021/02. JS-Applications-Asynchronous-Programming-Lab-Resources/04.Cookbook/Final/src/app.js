@@ -1,6 +1,6 @@
 async function getRecipeList() {
 
-    const url = 'http://localhost:3030/jsonstore/cookbook/recipes'
+    const url = 'http://localhost:3030/data/recipes'
 
     const main = document.querySelector('main')
     try{
@@ -35,7 +35,7 @@ result.addEventListener('click',() => getRecipeDetails(recipe._id,result))
 }
 
 async function getRecipeDetails(id,preview){
-const url = 'http://localhost:3030/jsonstore/cookbook/details/' + id
+const url = 'http://localhost:3030/data/recipes/' + id
 const response  =await fetch(url)
 const data  =  await response.json();
  const result = e('article', {}, 
@@ -112,6 +112,13 @@ window.addEventListener('load',() =>{
 
    }
 
+})
+
+const logoutBtn  =document.getElementById('logoutBtn')
+logoutBtn.addEventListener('click',ev => {
+    ev.preventDefault()
+    sessionStorage.removeItem('authToken')
+    location.reload()
 })
 
 
