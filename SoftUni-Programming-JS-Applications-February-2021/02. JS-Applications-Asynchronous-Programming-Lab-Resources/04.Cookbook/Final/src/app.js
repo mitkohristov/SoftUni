@@ -103,4 +103,15 @@ function e(type, attributes, ...content) {
 
 }
 
+window.addEventListener('load',() =>{
+   if (sessionStorage.getItem('authToken') == null){
+    document.getElementById('guest').style.display = 'inline-block'
+   }else if(sessionStorage.getItem('authToken') != null){
+    document.getElementById('guest').style.display = 'none'
+    document.getElementById('user').style.display = 'inline-block'
+
+   }
+
+})
+
 
