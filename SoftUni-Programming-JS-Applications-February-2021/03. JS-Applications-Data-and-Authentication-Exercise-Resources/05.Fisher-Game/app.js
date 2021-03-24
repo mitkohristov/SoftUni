@@ -93,7 +93,7 @@ async function getAllCatches() {
             e('hr', {}),
             e('label', {}, 'Weight'),
             e('input', { type: 'number', className: 'weight', value: o.weight }),
-            ('hr'),
+            e('hr'),
             e('label', {}, 'Species'),
             e('input', { type: 'text', className: 'species', value: o.species }),
             e('hr', {}),
