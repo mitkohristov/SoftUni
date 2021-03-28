@@ -15,6 +15,14 @@ const months = [...document.querySelectorAll('.daysCalendar')].reduce((acc,c) =>
  document.body.innerHTML = ''
 document.body.appendChild(yearSelect)
 
-document.body.addEventListener('click',ev => {
+yearSelect.addEventListener('click',ev => {
+ if(ev.target.classList.contains('date') || ev.target.classList.contains('day')){
+
     console.log(ev.target)
+ }
+
+})
+
+document.body.addEventListener('click',ev => {
+  
 })
