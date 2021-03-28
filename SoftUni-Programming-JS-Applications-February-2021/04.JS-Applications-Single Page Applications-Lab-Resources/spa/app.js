@@ -1,4 +1,4 @@
-import {sumNumbers} from './module.js';
+import {sumNumbers as sum} from './module.js';
 
-const result = sumNumbers(5,7)
+const result = sum(5,7)
 document.querySelector('main').textContent = `The result is ${result}`
