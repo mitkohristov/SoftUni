@@ -1,37 +1,52 @@
 import {setupCatalog,showCatalog} from './catalog.js'
 import {setupLogin,showLogin} from './login.js'
 import {setupRegister,showRegister} from './register.js'
+import {setupCreate,showCreate} from './create.js'
 main()
 
 
 function main(){
     setUserNav()
+    const nav =document.querySelector('nav')
  const main = document.querySelector('main');
     const catalogSection = document.getElementById('catalogSection');
     const loginSection = document.getElementById('loginSection'); 
     const registerSection = document.getElementById('registerSection'); 
+    const createSection = document.getElementById('createSection'); 
 
     const links ={ 
      'catalogLink': showCatalog,
      'loginLink' :showLogin,
-     'registerLink' :showRegister
+     'registerLink' :showRegister,
+     'createLink' :showCreate
 
 
     }
     setupCatalog(main,catalogSection)
-    setupLogin(main,loginSection,() =>{setUserNav(),showCatalog()})
-    setupRegister(main,registerSection,() =>{setUserNav(),showCatalog()})
+    setupLogin(main,loginSection,() =>{setUserNav(),setActiveNav('catalogLink'),showCatalog()})
+    setupRegister(main,registerSection,() =>{setUserNav(),setActiveNav('registerLink'),showCatalog()})
+    setupCreate(main,createSection,() =>{setActiveNav('catalogLink'),showCatalog()})
     setupNavigation()
 
     //start application in catalog view
     showCatalog();
+    function setActiveNav(targetId){
+        [...nav.querySelectorAll('a')].forEach(l =>{
+            if(l.id === targetId){
+                l.classList.add('active')
+            }else {
+                l.classList.remove('active')
+            }
+        }) 
+    }
    
     function setupNavigation(){
-    document.querySelector('nav').addEventListener('click',ev =>{
+        nav.addEventListener('click',ev =>{
      if(ev.target.tagName == 'A'){
          const view = links[ev.target.id]
          if(typeof view == 'function'){
             ev.preventDefault()
+            setActiveNav(ev.target.id)
              view()
          }
       
@@ -63,7 +78,8 @@ function main(){
         });
         if (response.status == 200) {
             sessionStorage.removeItem('authToken');
-            window.location.pathname = 'index.html';
+           setUserNav();
+           showCatalog();
         } else {
             console.error(await response.json());
         }
