@@ -1,45 +1,40 @@
-const createForm = document.getElementById('create')
-createForm.addEventListener('submit',ev =>{
-   ev.preventDefault()
-const formData = new FormData(createForm)
-const name = formData.get('name')
-const img = formData.get('img')
-const ingredientsRaw = formData.get('ingredients')
-const stepsRaw = formData.get('steps')
-if(name == '' || img == '' || ingredientsRaw == '' || stepsRaw == ''){
-    return alert('All fields are required')
-}
-const ingredients = ingredientsRaw.split('\n').map(i => i.trim())
-const steps = stepsRaw.split('\n').map(s =>s.trim())
+const form = document.querySelector('form');
 
-createRecipe(name,img,ingredients,steps);
+form.addEventListener('submit', (ev => {
+    ev.preventDefault();
+    const formData = new FormData(ev.target);
+    onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
+}));
 
+async function onSubmit(data) {
+    const body = JSON.stringify({
+        name: data.name,
+        img: data.img,
+        ingredients: data.ingredients.split('\n').map(l => l.trim()).filter(l => l != ''),
+        steps: data.steps.split('\n').map(l => l.trim()).filter(l => l != '')
+    });
 
-})
-
-
-async function createRecipe(name,img,ingredients,steps){
-    const options = {
-        method: 'POST',
-        headers: {},
-        body: JSON.stringify({name,img,ingredients,steps})
-    }
-    const token = sessionStorage.getItem('authToken')
-    if(token == null){
-        alert('You need to be logged in to create a recipe')
-        window.location.pathname = '/login.html'
-    }else if(token !== null){
-        options.headers['X-Authorization'] = token
+    const token = sessionStorage.getItem('authToken');
+    if (token == null) {
+        return window.location.pathname = 'index.html';
     }
 
-    const response = await fetch('http://localhost:3030/data/recipes',options)
-    const data = response.json()
-    if(response.ok){
-      alert('Recepie Submitted')
-
-    }else if(!response.ok){
-        return alert(data.message)
+    try {
+        const response = await fetch('http://localhost:3030/data/recipes', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Authorization': token
+            },
+            body
+        });
+        
+        if (response.status == 200) {
+            window.location.pathname = 'index.html';
+        } else {
+            throw new Error(await response.json());
+        }
+    } catch (err) {
+        console.error(err.message);
     }
-
-
 }

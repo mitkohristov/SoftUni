@@ -1,33 +1,33 @@
-const loginForm = document.getElementById('login')
-loginForm.addEventListener('submit', ev =>{
-  ev.preventDefault()
-  const formData = new FormData(loginForm)
-  const email = formData.get('email')
-  const password = formData.get('password')
-   if(email == '' || password == ''){
-         return alert('All fields are required')
-   }
-  
-   login(email, password)
-})
+const form = document.querySelector('form');
 
-async function login(email, password){
-      const options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body : JSON.stringify({email,password})
-      }
+form.addEventListener('submit', (ev => {
+    ev.preventDefault();
+    const formData = new FormData(ev.target);
+    onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
+}));
 
-const response = await fetch('http://localhost:3030/users/login',options)
-const data = await response.json()
-const token = data.accessToken
-  if(response.ok){
-    sessionStorage.setItem('authToken',token)
-     alert('Success')
-     window.location.pathname = '/index.html'
-  }else if(!response.ok){
-       return alert(data.message)
-  }
- 
-    
+async function onSubmit(data) {
+    const body = JSON.stringify({
+        email: data.email,
+        password: data.password,
+    });
+
+    try {
+        const response = await fetch('http://localhost:3030/users/login', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body
+        });
+        const data = await response.json();
+        if (response.status == 200) {
+            sessionStorage.setItem('authToken', data.accessToken);
+            window.location.pathname = 'index.html';
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
 }
