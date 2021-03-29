@@ -1,41 +1,77 @@
 import {setupCatalog,showCatalog} from './catalog.js'
+import {setupLogin,showLogin} from './login.js'
+import {setupRegister,showRegister} from './register.js'
+main()
 
 
+function main(){
+    setUserNav()
+ const main = document.querySelector('main');
+    const catalogSection = document.getElementById('catalogSection');
+    const loginSection = document.getElementById('loginSection'); 
+    const registerSection = document.getElementById('registerSection'); 
+
+    const links ={ 
+     'catalogLink': showCatalog,
+     'loginLink' :showLogin,
+     'registerLink' :showRegister
 
 
-const main = document.querySelector('main');
-const catalogSection = document.getElementById('catalogSection');
-
-setupCatalog(main,catalogSection)
-showCatalog();
-
-/*
-window.addEventListener('load', async () => {
-    if (sessionStorage.getItem('authToken') != null) {
-        document.getElementById('user').style.display = 'inline-block';
-        document.getElementById('logoutBtn').addEventListener('click', logout);
-    } else {
-        document.getElementById('guest').style.display = 'inline-block';
     }
+    setupCatalog(main,catalogSection)
+    setupLogin(main,loginSection,() =>{setUserNav(),showCatalog()})
+    setupRegister(main,registerSection,() =>{setUserNav(),showCatalog()})
+    setupNavigation()
 
+    //start application in catalog view
+    showCatalog();
    
+    function setupNavigation(){
+    document.querySelector('nav').addEventListener('click',ev =>{
+     if(ev.target.tagName == 'A'){
+         const view = links[ev.target.id]
+         if(typeof view == 'function'){
+            ev.preventDefault()
+             view()
+         }
+      
+        
+     }
 
-    
-});
-
-
-async function logout() {
-    const response = await fetch('http://localhost:3030/users/logout', {
-        method: 'get',
-        headers: {
-            'X-Authorization': sessionStorage.getItem('authToken')
-        },
-    });
-    if (response.status == 200) {
-        sessionStorage.removeItem('authToken');
-        window.location.pathname = 'index.html';
-    } else {
-        console.error(await response.json());
+    })
     }
+
+
+    function setUserNav() {
+        if (sessionStorage.getItem('authToken') != null) {
+            document.getElementById('user').style.display = 'inline-block';
+            document.getElementById('guest').style.display = 'none';
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+        } else {
+            document.getElementById('user').style.display = 'none';
+            document.getElementById('guest').style.display = 'inline-block';
+        }
+      }
+      
+    
+    async function logout() {
+        const response = await fetch('http://localhost:3030/users/logout', {
+            method: 'get',
+            headers: {
+                'X-Authorization': sessionStorage.getItem('authToken')
+            },
+        });
+        if (response.status == 200) {
+            sessionStorage.removeItem('authToken');
+            window.location.pathname = 'index.html';
+        } else {
+            console.error(await response.json());
+        }
+    }
+    
+    
+    
+    
+   
 }
-*/
+ 
