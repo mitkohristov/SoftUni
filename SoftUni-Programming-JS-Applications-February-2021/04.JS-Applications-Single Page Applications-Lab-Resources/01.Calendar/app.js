@@ -56,11 +56,12 @@ document.body.addEventListener('click',ev => {
     }else if(ev.target.tagName == 'TD' || ev.target.tagName == 'DIV'){
     const monthName = ev.target.textContent.trim()
    if(monthNames.hasOwnProperty(monthName)){
-       let parent = ev.target.parentNode
-       while(parent.tagName !== 'TABLE'){
-     parent = parent.parentNode
+       let parent = ev.currentTarget
+    //    let parent = ev.target.parentNode
+    //    while(parent.tagName !== 'TABLE'){
+    //  parent = parent.parentNode
 
-       }
+    //    }
        const year = parent.querySelector('caption').textContent.trim()
        const monthId = `month-${year}-${monthNames[monthName]}`
        displaySection(months[monthId])
