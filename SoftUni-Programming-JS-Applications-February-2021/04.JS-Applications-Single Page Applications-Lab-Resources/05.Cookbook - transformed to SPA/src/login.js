@@ -29,7 +29,7 @@ async function onSubmit(data) {
             throw new Error(data.message);
         }
     } catch (err) {
-        console.error(err.message);
+        alert(err.message);
     }
 }
 
@@ -46,6 +46,7 @@ export function setupLogin(mainTarget,sectionTarget,onSuccessTarget){
 form.addEventListener('submit', (ev => {
     ev.preventDefault();
     const formData = new FormData(ev.target);
+    
     onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
 }));
 

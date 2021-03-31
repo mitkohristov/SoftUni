@@ -32,7 +32,7 @@ async function onSubmit(data) {
             throw new Error(data.message);
         }
     } catch (err) {
-        console.error(err.message);
+        alert(err.message);
     }
 }
 
