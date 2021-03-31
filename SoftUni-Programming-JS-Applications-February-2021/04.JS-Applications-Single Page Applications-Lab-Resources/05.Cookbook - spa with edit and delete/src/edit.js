@@ -9,6 +9,7 @@ async function getRecipeById(id) {
 
 
 async function onSubmit(data) {
+    console.log(data)
     const recipeId = data.id
     const body = JSON.stringify({
         name: data.name,
@@ -69,7 +70,7 @@ export async function showEdit(id){
     main.appendChild(section)
     const recipe = await getRecipeById(id)
 
-    section.querySelector('[name="id"]').value = recipe.id
+    section.querySelector('[name="id"]').value = recipe._id
     section.querySelector('[name="name"]').value = recipe.name
     section.querySelector('[name="img"]').value = recipe.img
     section.querySelector('[name="ingredients"]').value = recipe.ingredients.join('\n')

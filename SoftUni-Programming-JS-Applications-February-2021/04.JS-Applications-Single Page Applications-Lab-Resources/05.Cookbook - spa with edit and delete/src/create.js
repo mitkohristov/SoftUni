@@ -5,7 +5,7 @@
 //     const formData = new FormData(ev.target);
 //     onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
 // }));
-import {showCatalog}from './catalog.js';
+import {showDetails}from './details.js';
 async function onSubmit(data) {
     const body = JSON.stringify({
         name: data.name,
@@ -30,7 +30,8 @@ async function onSubmit(data) {
         });
         
         if (response.status == 200) {
-          showDetails(recipeId)
+            const recipe = await response.json()
+          showDetails(recipe._id)
         } else {
             throw new Error(await response.json());
         }
