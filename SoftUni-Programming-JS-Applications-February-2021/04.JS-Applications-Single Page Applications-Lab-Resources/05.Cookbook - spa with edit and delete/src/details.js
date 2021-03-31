@@ -29,7 +29,7 @@ function createRecipeCard(recipe) {
             )
         ),
     );
-
+  const userId = sessionStorage.getItem('userId');
     return result;
 } 
 

@@ -36,7 +36,6 @@ export async function showEdit(id){
     main.innerHTML = '';
     main.appendChild(section)
     const recipe = await getRecipeById(id)
-     console.log(recipe)
 
     section.querySelector('[name="id"]').value = recipe.id
     section.querySelector('[name="name"]').value = recipe.name

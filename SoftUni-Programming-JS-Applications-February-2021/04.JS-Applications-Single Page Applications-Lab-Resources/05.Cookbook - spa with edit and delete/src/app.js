@@ -86,6 +86,8 @@ function main(){
         });
         if (response.status == 200) {
             sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('userId');
+            sessionStorage.removeItem('email');
            setUserNav();
            showCatalog();
         } else {
