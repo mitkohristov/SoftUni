@@ -59,6 +59,7 @@ export function setupCatalog(mainTarget,sectionTarget,setActiveNavCb) {
 }
 
 export async function showCatalog(){
+    setActiveNav('catalogLink')
     section.innerHTML = ' <p style="color: white">Loading...</p>'
     main.innerHTML = '';
     

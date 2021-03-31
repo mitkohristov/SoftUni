@@ -5,7 +5,7 @@
 //     const formData = new FormData(ev.target);
 //     onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
 // }));
-
+import {showCatalog} from './catalog.js'
 async function onSubmit(data) {
     if (data.password != data.rePass) {
         return console.error('Passwords don\'t match');
@@ -27,7 +27,7 @@ async function onSubmit(data) {
         const data = await response.json();
         if (response.status == 200) {
             sessionStorage.setItem('authToken', data.accessToken);
-           onSuccess()
+            showCatalog()
         } else {
             throw new Error(data.message);
         }
@@ -39,11 +39,11 @@ async function onSubmit(data) {
 
 let main 
 let section 
-let onSuccess
-export function setupRegister(mainTarget,sectionTarget,onSuccessTarget){
+let setActiveNav
+export function setupRegister(mainTarget,sectionTarget,setActiveNavCb){
  main = mainTarget
  section = sectionTarget
- onSuccess = onSuccessTarget
+ setActiveNav = setActiveNavCb
 
  const form = section.querySelector('form');
 
@@ -56,6 +56,7 @@ form.addEventListener('submit', (ev => {
 }
 
 export function showRegister(){
+    setActiveNav('registerLink')
     main.innerHTML = '';
     main.appendChild(section)
 

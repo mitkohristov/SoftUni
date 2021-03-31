@@ -22,10 +22,10 @@ function main(){
 
 
     }
-    setupCatalog(main,catalogSection)
-    setupLogin(main,loginSection,() =>{setUserNav(),setActiveNav('catalogLink'),showCatalog()})
-    setupRegister(main,registerSection,() =>{setUserNav(),setActiveNav('registerLink'),showCatalog()})
-    setupCreate(main,createSection,() =>{setActiveNav('catalogLink'),showCatalog()})
+    setupCatalog(main,catalogSection,setActiveNav)
+    setupLogin(main,loginSection,setActiveNav)
+    setupRegister(main,registerSection,setActiveNav)
+    setupCreate(main,createSection,setActiveNav)
     setupNavigation()
 
     //start application in catalog view
@@ -46,7 +46,7 @@ function main(){
          const view = links[ev.target.id]
          if(typeof view == 'function'){
             ev.preventDefault()
-            setActiveNav(ev.target.id)
+    
              view()
          }
       

@@ -5,7 +5,7 @@
 
 
 */
-
+import {showCatalog} from './catalog.js'
 async function onSubmit(data) {
     const body = JSON.stringify({
         email: data.email,
@@ -23,7 +23,7 @@ async function onSubmit(data) {
         const data = await response.json();
         if (response.status == 200) {
             sessionStorage.setItem('authToken', data.accessToken);
-            onSuccess()
+            showCatalog()
       
         } else {
             throw new Error(data.message);
@@ -53,6 +53,7 @@ form.addEventListener('submit', (ev => {
 }
 
 export function showLogin(){
+    setActiveNav('loginLink ')
     main.innerHTML = '';
     main.appendChild(section)
 
