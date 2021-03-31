@@ -23,8 +23,10 @@ function createRecipeCard(recipe) {
         e('div', { className: 'description' },
             e('h3', {}, 'Preparation:'),
             recipe.steps.map(s => e('p', {}, s)),
+            e('div',{ className: 'controls'},
             e('button',{onclick:()=>showEdit(recipe._id)},'\u270EEdit'),
-            e('button',{},'\u2716 Delete'),
+            e('button',{},'\u2716 Delete')
+            )
         ),
     );
 
