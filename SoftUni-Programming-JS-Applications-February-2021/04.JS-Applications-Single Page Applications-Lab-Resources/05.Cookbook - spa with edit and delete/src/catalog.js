@@ -24,6 +24,8 @@ export function createRecipePreview(recipe) {
     return result;
 
     async function toggleCard() {
+       
+        
         const fullRecipe = await getRecipeById(recipe._id);
 
         result.replaceWith(createRecipeCard(fullRecipe));
