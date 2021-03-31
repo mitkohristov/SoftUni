@@ -23,6 +23,8 @@ async function onSubmit(data) {
         const data = await response.json();
         if (response.status == 200) {
             sessionStorage.setItem('authToken', data.accessToken);
+            document.getElementById('user').style.display = 'inline-block';
+            document.getElementById('guest').style.display = 'none'; 
             showCatalog()
       
         } else {
@@ -53,7 +55,7 @@ form.addEventListener('submit', (ev => {
 }
 
 export function showLogin(){
-    setActiveNav('loginLink ')
+    setActiveNav('loginLink')
     main.innerHTML = '';
     main.appendChild(section)
 

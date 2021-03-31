@@ -16,7 +16,7 @@ async function getRecipeById(id) {
 }
 
 export function createRecipePreview(recipe) {
-    const result = e('article', { className: 'preview', onClick: toggleCard },
+    const result = e('article', { className: 'preview', onClick:toggleCard },
         e('div', { className: 'title' }, e('h2', {}, recipe.name)),
         e('div', { className: 'small' }, e('img', { src: recipe.img })),
     );
@@ -27,9 +27,9 @@ export function createRecipePreview(recipe) {
        
         
         const fullRecipe = await getRecipeById(recipe._id);
-
         result.replaceWith(createRecipeCard(fullRecipe));
     }
+ 
 }
 
 function createRecipeCard(recipe) {
