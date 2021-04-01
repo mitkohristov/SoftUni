@@ -36,6 +36,35 @@ function createRecipeCard(recipe) {
     return result;
 } 
 
+
+function  onDelete(id){
+    const confirmed = confirm('Are you sure you want to delete this recipe?')
+    if(confirmed){
+        const token = sessionStorage.getItem('authToken');
+    if (token == null) {
+   return alert('You\'re not logged in')
+    }
+
+    try {
+        const response = await fetch('http://localhost:3030/data/recipes/' + id, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Authorization': token
+            },
+           
+        });
+        
+        if (response.status == 200) {
+    section.innerHTML = '<article><h2>Recipe deleted</h2></article>'
+        } else {
+            throw new Error(await response.json());
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+    }
+}
 let main
 let section
 let setActiveNav
