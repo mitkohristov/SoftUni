@@ -30,14 +30,14 @@ function createRecipeCard(recipe) {
   if(userId == recipe._ownerId){
       result.appendChild( e('div',{ className: 'controls'},
       e('button',{onclick:()=>showEdit(recipe._id)},'\u270EEdit'),
-      e('button',{},'\u2716 Delete')
+      e('button',{onclick:()=>onDelete(recipe._id)},'\u2716 Delete')
       ))
   }
     return result;
 } 
 
 
-function  onDelete(id){
+async function  onDelete(id){
     const confirmed = confirm('Are you sure you want to delete this recipe?')
     if(confirmed){
         const token = sessionStorage.getItem('authToken');
