@@ -1,5 +1,5 @@
-import {e}  from '../dom.js'
- import {showCommentsSection} from '../../src/views/comments.js'
+// import {e}  from '../dom.js'
+//  import {showCommentsSection} from '../../src/views/comments.js'
 
 async function getTopic(){
 
