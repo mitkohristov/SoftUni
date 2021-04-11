@@ -1,3 +1,5 @@
+import {e} from '../dom.js'
+
 async function postDetails(id) {
     const response = await fetch('http://localhost:3030/jsonstore/collections/myboard/posts/' + id);
     const data = await response.json();
@@ -27,7 +29,7 @@ async function getComments(){
 
  function createCommentsPreview(comment,comments) {
   
-   console.log(Object.values(comments).filter(c => c.ownerId == comment._id));
+   const allComments = Object.values(comments).filter(c => c.ownerId == comment._id);
 
     const div = document.createElement('div');
     div.classList.add('comment')
@@ -39,9 +41,26 @@ async function getComments(){
                     <p class="post-content">${comment.text}</p>
                 </div>
             </div>
-            <div id="user-comment">
+            ${allComments.map((c) =>{
+               return `<div class="user-comment">
+                        <div class="topic-name-wrapper">
+                        <div class="topic-name">
+                        <p><strong>${c.username}</strong> commented on <time>2020-10-10 12:08:28</time></p>
+                        <div class="post-content">
+                        <p>${c.postText}</p>
+                        
+                        
+                        </div>
+                        
+                        
+                        </div>
+
+
+                        </div>
             
-            </div>
+               </div>`
+            })}
+           
             
             <div class="answer-comment">
             <p><span>currentUser</span> comment:</p>
@@ -55,9 +74,7 @@ async function getComments(){
                     <button id=${comment._id}>Post</button>
                 </form>
             </div>
-        </div>
-
-            `
+        </div>`
 
             
             
@@ -112,7 +129,7 @@ export async function showCommentsSection(id) {
        
         postComment({username, postText,ownerId})
     
-        
+        showCommentsSection(id)
          
 
     
