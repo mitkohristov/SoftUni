@@ -39,18 +39,17 @@ function createCommentsPreview(comment, comments) {
             
                     <p class="post-content">${comment.text}</p>
                 </div>
-            </div>
+           
             ${allComments.map((c) => {
-        return `<div class="user-comment">
-                        <div class="topic-name-wrapper">
+        return `<div id="user-comment">
+                    <div class="topic-name-wrapper">
                         <div class="topic-name">
-                        <p><strong>${c.username}</strong> commented on <time>2020-10-10 12:08:28</time></p>
+                        <p><strong>${c.username}</strong> commented on <time>${c.time}</time></p>
                         <div class="post-content">
                         <p>${c.postText}</p>
                         
                         
                         </div>
-                        
                         
                         </div>
 
@@ -125,8 +124,8 @@ export async function showCommentsSection(id) {
             return alert('All fields are required')
         }
         const ownerId = event.submitter.id
-
-        postComment({ username, postText, ownerId })
+        const time = new Date()
+        postComment({ username, postText, ownerId,time })
 
         showCommentsSection(id)
 
