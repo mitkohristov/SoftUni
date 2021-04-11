@@ -38,6 +38,7 @@ const form = homeSection.querySelector('form')
 form.addEventListener('submit',event => {
   
     event.preventDefault()
+    
     const formData = new FormData(form)
     const title = formData.get('topicName')
     const username = formData.get('username')
@@ -45,6 +46,8 @@ form.addEventListener('submit',event => {
     if(title == '' || username == '' || text == ''){
         return alert('All fields required!')
     }
+
+   
     const body ={
         title:title.trim(),
         username :username.trim(),
@@ -54,6 +57,12 @@ form.addEventListener('submit',event => {
     form.reset()
     showHome()
 })
+
+
+
+
+
+
 
 
 setupHome(main,homeSection,topicSection)

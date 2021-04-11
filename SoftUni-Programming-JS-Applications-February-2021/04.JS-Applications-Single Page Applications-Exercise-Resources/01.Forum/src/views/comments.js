@@ -14,26 +14,39 @@ function createCommentsPreview(comment) {
             
                     <p class="post-content">${comment.text}</p>
                 </div>
-            </div>`
+            </div>
+            
+            <div id="user-comment">
+            
+            </div>
+            
+            <div class="answer-comment">
+            <p><span>currentUser</span> comment:</p>
+            <div class="answer">
+                <form id="answer-form">
+                    <textarea name="postText" id="comment" cols="30" rows="10"></textarea>
+                    <div>
+                        <label for="username">Username <span class="red">*</span></label>
+                        <input type="text" name="username" id="username">
+                    </div>
+                    <button>Post</button>
+                </form>
+            </div>
+        </div>
+
+            `
+
+            
+            
+            
+            
+
 
     return div
 
 }
 
-const userComments = `
-<div class="answer-comment">
-                <p><span>currentUser</span> comment:</p>
-                <div class="answer">
-                    <form>
-                        <textarea name="postText" id="comment" cols="30" rows="10"></textarea>
-                        <div>
-                            <label for="username">Username <span class="red">*</span></label>
-                            <input type="text" name="username" id="username">
-                        </div>
-                        <button>Post</button>
-                    </form>
-                </div>
-            </div>`
+
 
 let main;
 let section;
@@ -49,10 +62,10 @@ export function setupCommentsSection(mainTarget, sectionTarget) {
 
 export async function showCommentsSection(id) {
     main.innerHTML = '';
-    main.appendChild(section);
     const result = await postDetails(id)
-    const res = createCommentsPreview(result)
-    main.appendChild(res);
+    const preview = createCommentsPreview(result)
+    section.appendChild(preview);
+    main.appendChild(section);
     
 }
 
