@@ -7,13 +7,26 @@ const homeSection  = document.getElementById('homeSection')
  const topicSection  =document.querySelector('.topic-title')
  const commentsSection  =document.getElementById('comments')
 
- window.addEventListener('click', (ev) => {
-   if(ev.target.tagName != 'H2'){
+ const links = {
+    'homeLink': showHome
 
+}
+
+ window.addEventListener('click', (ev) => {
+   if(ev.target.tagName != 'H2' ){
+    if(links.hasOwnProperty(ev.target.id)){
+        links[ev.target.id]()
+    }
    }else {
+       
     showCommentsSection(ev.target.id)
    }
+   
 })
+
+
+
+
 
 const form = homeSection.querySelector('form')
 form.addEventListener('submit',event => {
@@ -31,6 +44,7 @@ form.addEventListener('submit',event => {
         text:text.trim()
     }
     postTopic(body)
+    form.reset()
     showHome()
 })
 

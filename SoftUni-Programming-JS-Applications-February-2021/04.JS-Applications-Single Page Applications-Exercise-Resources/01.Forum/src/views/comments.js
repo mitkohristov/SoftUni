@@ -1,4 +1,24 @@
+async function postDetails(id){
+    const response  =await fetch('http://localhost:3030/jsonstore/collections/myboard/posts/' + id);
+    const data = await response.json();
+    return data
+}
 
+function createCommentsPreview(comment){
+  const div = document.createElement('div');
+  div.classList.add('comment')
+
+    div.innerHTML =  `<div class="header">
+                    <img src="./static/profile.png" alt="avatar">
+                    <p><span>${comment.username}</span> posted on <time>2020-10-10 12:08:28</time></p>
+            
+                    <p class="post-content">${comment.text}</p>
+                </div>
+            </div>`
+         
+            return div
+
+}
 
 let main ;
 let section;
@@ -17,20 +37,15 @@ export async function showCommentsSection(id){
   main.innerHTML = '';
   main.appendChild(section);
 
+  const result = await postDetails(id)
+  
 
-    /*
-     <div class="comment">
-                <div class="header">
-                    <img src="./static/profile.png" alt="avatar">
-                    <p><span>David</span> posted on <time>2020-10-10 12:08:28</time></p>
-            
-                    <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facere sint
-                        dolorem quam,
-                        accusantium ipsa veniam laudantium inventore aut, tenetur quibusdam doloribus. Incidunt odio
-                        nostrum facilis ipsum dolorem deserunt illum?</p>
-                </div>
-            </div>
-            */
+    const res = createCommentsPreview(result)
+    
+   
+
+    main.appendChild(res);
+     
 
 
  
