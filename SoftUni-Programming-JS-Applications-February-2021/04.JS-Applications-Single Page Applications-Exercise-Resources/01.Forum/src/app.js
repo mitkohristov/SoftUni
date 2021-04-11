@@ -14,8 +14,14 @@ const homeSection  = document.getElementById('homeSection')
 
  window.addEventListener('click', (ev) => {
    if(ev.target.tagName != 'H2' ){
+    
     if(links.hasOwnProperty(ev.target.id)){
         links[ev.target.id]()
+    }
+    if(ev.target.id === 'cancel'){
+        ev.preventDefault()
+        const form = homeSection.querySelector('form')
+        form.reset()
     }
    }else {
        
@@ -30,6 +36,7 @@ const homeSection  = document.getElementById('homeSection')
 
 const form = homeSection.querySelector('form')
 form.addEventListener('submit',event => {
+  
     event.preventDefault()
     const formData = new FormData(form)
     const title = formData.get('topicName')
