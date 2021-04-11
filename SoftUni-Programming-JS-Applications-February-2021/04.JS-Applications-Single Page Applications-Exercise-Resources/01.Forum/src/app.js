@@ -24,7 +24,7 @@ const homeSection  = document.getElementById('homeSection')
         form.reset()
     }
    }else {
-       
+      
     showCommentsSection(ev.target.id)
    }
    
@@ -32,11 +32,9 @@ const homeSection  = document.getElementById('homeSection')
 
 
 
-
-
 const form = homeSection.querySelector('form')
 form.addEventListener('submit',event => {
-  
+
     event.preventDefault()
     
     const formData = new FormData(form)
