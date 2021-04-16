@@ -1,5 +1,6 @@
 import {html} from '../../node_modules/lit-html/lit-html.js';
 import {getMemeById,updateMeme} from '../api/data.js'
+import { notify } from '../notification.js';
 
 
 
@@ -38,9 +39,9 @@ export async function editPage(ctx){
        const title = formData.get('title')
        const description = formData.get('description')
        const imageUrl = formData.get('imageUrl')
-
+    try{
        if(!title || !description || !imageUrl){
-        return alert('All fields are required')
+        throw new Error('All fields are required')
     }
       
 
@@ -51,5 +52,8 @@ export async function editPage(ctx){
 
     ctx.page.redirect('/details/' + memeId )
 
+    } catch(err){
+        notify(err.message)
+
     }
-}
+}}

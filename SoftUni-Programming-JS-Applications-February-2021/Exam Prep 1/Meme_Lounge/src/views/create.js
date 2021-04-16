@@ -1,6 +1,7 @@
 import {html} from '../../node_modules/lit-html/lit-html.js';
 
 import {createMeme} from '../api/data.js'
+import { notify } from '../notification.js';
 
 
 
@@ -35,9 +36,9 @@ export async function createMemePage(ctx){
         const title = formData.get('title').trim()
         const description = formData.get('description').trim()
         const imageUrl = formData.get('imageUrl').trim()
-
+         try{
         if(!title || !description || !imageUrl){
-            return alert('All fields are required')
+            throw new Error('All fields are required')
         }
           
         await createMeme({
@@ -48,7 +49,10 @@ export async function createMemePage(ctx){
 
         ctx.page.redirect('/catalog')
 
+    } catch(err){
+    notify(err.message)
     }
+    
 
- 
+}
 }

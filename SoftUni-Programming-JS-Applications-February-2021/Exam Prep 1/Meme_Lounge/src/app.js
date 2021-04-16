@@ -11,6 +11,7 @@ import {createMemePage} from './views/create.js'
 import {detailsPage} from './views/details.js'
 import {editPage} from './views/edit.js'
 import {profilePage} from './views/profile.js'
+import {notify}  from './notification.js'
 
 const main = document.querySelector('main')
 setUserNav()
