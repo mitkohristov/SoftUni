@@ -43,10 +43,10 @@ export async function registerPage(ctx){
     async function onSubmit(event){
      event.preventDefault();
      const formData = new FormData(event.target);
-     const username = formData.get('username')
-     const email = formData.get('email')
-     const password = formData.get('password')
-     const repeatPass = formData.get('repeatPass')
+     const username = formData.get('username').trim()
+     const email = formData.get('email').trim()
+     const password = formData.get('password').trim()
+     const repeatPass = formData.get('repeatPass').trim()
      const gender = formData.get('gender')
      
        if(!username || !email || !password || !repeatPass || !gender){
