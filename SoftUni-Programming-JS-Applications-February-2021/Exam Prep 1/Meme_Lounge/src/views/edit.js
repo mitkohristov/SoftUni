@@ -6,7 +6,7 @@ import {getMemeById,updateMeme} from '../api/data.js'
 const editTemplate = (meme,onSubmit) =>html`
 
 <section id="edit-meme">
-            <form @submit =${onSubmit}id="edit-form">
+            <form @submit =${onSubmit} id="edit-form">
                 <h1>Edit Meme</h1>
                 <div class="container">
                     <label for="title">Title</label>
@@ -35,9 +35,9 @@ export async function editPage(ctx){
     async function onSubmit(event){
         event.preventDefault()
        const formData = new FormData(event.target)
-       const title = formData.get('title').trim()
-       const description = formData.get('title').trim()
-       const imageUrl = formData.get('title').trim()
+       const title = formData.get('title')
+       const description = formData.get('description')
+       const imageUrl = formData.get('imageUrl')
 
        if(!title || !description || !imageUrl){
         return alert('All fields are required')
@@ -49,7 +49,7 @@ export async function editPage(ctx){
         title,description,imageUrl
     })
 
-    ctx.page.redirect('/details/' +memeId )
+    ctx.page.redirect('/details/' + memeId )
 
     }
 }

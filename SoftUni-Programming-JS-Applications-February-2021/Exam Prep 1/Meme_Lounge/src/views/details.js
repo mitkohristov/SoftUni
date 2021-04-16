@@ -1,9 +1,9 @@
 import {html} from '../../node_modules/lit-html/lit-html.js';
-import {getMemeById} from '../api/data.js'
+import {getMemeById,deleteMeme} from '../api/data.js'
 
 
 
-const detailsTemplate = (meme,userId) =>html`
+const detailsTemplate = (meme,userId,onDelete) =>html`
 
 <section id="meme-details">
             <h1>Meme Title: ${meme.title}</h1>
@@ -18,7 +18,7 @@ const detailsTemplate = (meme,userId) =>html`
                     <p>${meme.description}</p>
 
                     ${meme._ownerId === userId ? html`<a class="button warning" href="/edit/${meme._id}">Edit</a>
-                    <button class="button danger">Delete</button>` : ''}
+                    <button @click=${onDelete} class="button danger">Delete</button>` : ''}
                     
                     
                 </div>
@@ -33,6 +33,16 @@ export async function detailsPage(ctx){
     const userId = sessionStorage.getItem('userId')
    const memeId = ctx.params.id
    const meme = await getMemeById(memeId)
-    ctx.render(detailsTemplate(meme,userId))
+    ctx.render(detailsTemplate(meme,userId,onDelete))
+
+
+
+    async function onDelete(){
+        const confirmed =  confirm('Are you sure you want to delete')
+        if(confirmed){
+            await deleteMeme(memeId)
+            ctx.page.redirect('/catalog')
+        }
+    }
 
 }

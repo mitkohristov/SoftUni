@@ -36,7 +36,10 @@ export async function createMemePage(ctx){
         const description = formData.get('description').trim()
         const imageUrl = formData.get('imageUrl').trim()
 
-       
+        if(!title || !description || !imageUrl){
+            return alert('All fields are required')
+        }
+          
         await createMeme({
             title,
             description,

@@ -10,6 +10,7 @@ import {catalogPage} from './views/catalog.js'
 import {createMemePage} from './views/create.js'
 import {detailsPage} from './views/details.js'
 import {editPage} from './views/edit.js'
+import {profilePage} from './views/profile.js'
 
 const main = document.querySelector('main')
 setUserNav()
@@ -24,6 +25,7 @@ page('/catalog',decorateContext,catalogPage);
 page('/create',decorateContext,createMemePage);
 page('/details/:id',decorateContext,detailsPage);
 page('/edit/:id',decorateContext,editPage);
+page('/profile',decorateContext,profilePage);
 
 page.start();
 

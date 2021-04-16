@@ -247,7 +247,7 @@ describe('E2E tests', function () {
         });
     });
 
-    describe.only('Catalog [ 25 Points ]', () => {
+    describe('Catalog [ 25 Points ]', () => {
         it('loads static home page [ 5 Points ]', async () => {
             await page.goto(host);
 
@@ -319,7 +319,7 @@ describe('E2E tests', function () {
         });
     });
 
-    describe('CRUD [ 40 Points ]', () => {
+    describe.only('CRUD [ 40 Points ]', () => {
         const email = 'ivan@mail.bg';
         const password = '345321';
 
