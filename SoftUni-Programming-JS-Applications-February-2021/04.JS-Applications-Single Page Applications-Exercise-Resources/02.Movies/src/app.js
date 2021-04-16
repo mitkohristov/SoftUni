@@ -1,6 +1,6 @@
-import {setupCatalog, showCatalog}  from '../src/views/catalog.js';
-import {setupLogin,showLogin} from '../src/views/login.js'
-import {setupRegister,showRegister} from '../src/views/register.js'
+import {setupCatalog, showCatalog}  from '../src/catalog.js';
+import {setupLogin,showLogin} from '../src/login.js';
+import {setupRegister,showRegister} from '../src/register.js';
 
 
 const main = document.querySelector('main');
@@ -16,6 +16,7 @@ window.addEventListener('click', (ev) => {
     ev.preventDefault()
    if(links.hasOwnProperty(ev.target.id)){
     const view = links[ev.target.id]
+    ev.preventDefault()
      view()
    }else {
 
@@ -26,6 +27,7 @@ window.addEventListener('click', (ev) => {
 
 
 const links = {
+    'catalogLink':showCatalog,
      'loginLink' : showLogin,
      'registerLink' : showRegister
 }

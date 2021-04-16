@@ -15,17 +15,18 @@ export function setupRegister(mainTarget,sectionTarget){
     section = sectionTarget;
   
 
-     const form = section.querySelectorAll('form')[0]
+     const form = section.querySelector('form')
+     
      form.addEventListener('submit',(event) => {
         event.preventDefault();
         console.log(event)
     
-        // const formData = new FormData(form)
-        // const email = formData.get('email')
-        // const password = formData.get('password')
-        // const repeatPassword = formData.get('repeatPassword')
+        const formData = new FormData(form)
+        const email = formData.get('email')
+        const password = formData.get('password')
+        const repeatPassword = formData.get('repeatPassword')
         
-        // console.log(formData)
+        console.log(email,password)
 
     })
     

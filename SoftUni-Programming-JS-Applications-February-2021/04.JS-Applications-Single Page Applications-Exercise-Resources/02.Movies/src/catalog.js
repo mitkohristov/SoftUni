@@ -1,4 +1,4 @@
-import {getAllMovies} from '../../src/api/api.js'
+import {getAllMovies} from './api.js'
 
 
 function createMoviePreview(movie){
